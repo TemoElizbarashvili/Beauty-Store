@@ -1,0 +1,21 @@
+﻿@using Beauty.Shared.Models;
+@model IEnumerable<Product>
+
+<div class="col-sm-6 mt-2">
+    <h2>@Model.Count() <b>Products</b> Were Found</h2>
+</div>
+
+
+@if (!Model.Any())
+{
+    <p>:(</p>
+}
+else
+{
+    <div class="row">
+    @foreach(var p in Model)
+    {
+        <partial name="ProductCard" model="p" />
+    }
+    </div>
+}

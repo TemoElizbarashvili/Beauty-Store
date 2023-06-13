@@ -33,17 +33,7 @@
             }
             @foreach(var p in Model.Products)
             {   
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="@p.ImgUrl" class="card-img-top" alt="Product 1">
-                    <div class="card-body">
-                        <h5 class="card-title">@p.Name</h5>
-                        <p class="card-text">@p.Description</p>
-                        <p class="card-price">@p.Price.ToString("C")</p>
-                        <button class="btn btn-primary">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
+                <partial name="ProductCard" model="p" />
             }
         </div>
         <div>

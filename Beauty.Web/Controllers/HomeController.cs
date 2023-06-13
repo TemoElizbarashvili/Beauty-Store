@@ -43,5 +43,11 @@ namespace Beauty.Web.Controllers
             return View();
         }
 
+        public IActionResult SearchResult(string searchText = "")
+        {
+            var resultList = _produtService.List().Where(p => p.Name.Contains(searchText)).ToList();
+            return View(resultList);
+        }
+
     }
 }

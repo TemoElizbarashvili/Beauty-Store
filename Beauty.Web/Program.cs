@@ -5,8 +5,16 @@ using Beauty.DAL.Repositories;
 using Beauty.DAL.Repositories.IRepository;
 using Beauty.DAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Beauty.Web.Areas.Identity.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("IdentityDbContextConnection");builder.Services.AddDbContext<IdentityDbContext>(options =>
+    options.UseSqlServer(connectionString));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<IdentityDbContext>();
+
 
 //Logging
 builder.Logging.ClearProviders();
@@ -19,6 +27,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISeedIdentity, SeedIdentity>();
+
 
 //DB context config
 builder.Services.AddDbContext<StoreDbContext>(opts =>
@@ -26,6 +36,8 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:StoreConnection"], b => b.MigrationsAssembly("Beauty.Web"));
 });
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<StoreDbContext>();
 
 
 var app = builder.Build();
@@ -42,6 +54,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -51,5 +64,16 @@ app.MapControllerRoute(
 
 //Seed data in Db contexts
 SeedData.EnsurePopulated(app);
+SeedIdentityDatabase();
 
 app.Run();
+
+
+void SeedIdentityDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<ISeedIdentity>();
+        dbInitializer.EnsurePopulated(app);
+    }
+}

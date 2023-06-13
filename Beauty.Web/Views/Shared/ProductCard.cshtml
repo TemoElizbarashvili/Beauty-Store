@@ -1,0 +1,14 @@
+﻿@using Beauty.Shared.Models;
+@model Product
+
+<div class="col-md-4 mb-2">
+    <div class="card">
+        <img src="@Model.ImgUrl" class="card-img-top" alt="Product 1">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">@Model.Description</p>
+            <p class="card-price">@Model.Price.ToString("C")</p>
+            <button class="btn btn-primary">Add to Cart</button>
+        </div>
+    </div>
+</div>
