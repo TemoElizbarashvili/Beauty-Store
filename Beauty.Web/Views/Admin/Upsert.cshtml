@@ -1,0 +1,59 @@
+﻿@using Beauty.Shared.Models
+@model Product
+
+
+
+<form asp-area="" asp-controller="Admin" asp-action="Upsert" method="post" class="m-2" enctype="multipart/form-data">
+    <input type="hidden" name="productId" value="@Model?.ProductId" />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <div class="col-9">
+                <h2 class="text-primary pl-3">
+                    @(Model != null ? "Update" : "Create") Product
+                </h2>
+
+                <hr />
+                <div asp-validation-summary="All" class=" text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span></>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span></>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span></>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImgUrl"></label>
+                    <input asp-for="ImgUrl" class="form-control" />
+                    <span asp-validation-for="ImgUrl" class="text-danger"></span></>
+                </div>
+                <div class="col-3">
+                    @if (Model?.ProductId != 0)
+                    {
+                        <img src="@Model?.ImgUrl" style="border-radius:5px; border:1px solid #bbb9b9; width:100%;" />
+                    }
+                </div>
+            </div>
+        </div>
+        @if (Model == null)
+        {
+            <button type="submit" class="btn btn-outline-success mt-3" style="width:150px;">Create</button>
+        }
+        else
+        {
+            <button type="submit" class="btn btn-outline-warning mt-3" style="width:150px;">Update</button>
+        }
+
+        <a asp-area="" asp-controller="Admin" asp-action="Index" class="btn btn-outline-info mt-3">Back to List</a>
+    </div>
+
+</form>

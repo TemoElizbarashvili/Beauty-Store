@@ -1,0 +1,98 @@
+﻿@using Beauty.Shared.Models;
+@{
+    ViewData["Title"] = "Beauty Store";
+}
+@model StoreViewModel
+
+<section id="banner" class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Welcome to Beauty Store</h1>
+                <p>Your one-stop destination for all your beauty needs.</p>
+                <a href="#products" class="btn btn-primary">Shop Now</a>
+            </div>
+            <div class="col-md-6">
+                <img src="https://cdn.storesupply.com/-/media/storesupply/images/contentpages/beauty-supply-store-banner.jpg?h=490&w=1000&hash=A7FC985D57C29E25324C65E9A7D63DDF" class="img-fluid" alt="Beauty Store Banner">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="products" class="bg-light py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Our Products</h2>
+            </div>
+        </div>
+        <div class="row">
+            @if (!Model.Products.Any())
+            {
+                <h4>There is no Products avialable</h4>
+            }
+            @foreach(var p in Model.Products)
+            {   
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="@p.ImgUrl" class="card-img-top" alt="Product 1">
+                    <div class="card-body">
+                        <h5 class="card-title">@p.Name</h5>
+                        <p class="card-text">@p.Description</p>
+                        <p class="card-price">@p.Price.ToString("C")</p>
+                        <button class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+        <div>
+            <ul class="pagination mt-2" style="margin-left:auto;">
+                <li class="page-item @(Model.PagingInfo.CurrentPage == 1 ? "disabled" : "")">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-productPage="1" class="page-link">&laquo;</a>
+                </li>
+                @for(int i = 1; i<Model.PagingInfo.TotalPages + 1; i++)
+                {
+                    <li class="page-item @(Model.PagingInfo.CurrentPage == i ? "active" : "")">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-productPage="@i" class="page-link">@i</a>
+                    </li>
+                }
+                <li class="page-item @(Model.PagingInfo.CurrentPage == Model.PagingInfo.TotalPages ? "disabled": "")">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" asp-route-productPage="@Model.PagingInfo.TotalPages" class="page-link">
+                        &raquo;
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section id="testimonials" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Testimonials</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"I love the products at Beauty Store. They always make me feel beautiful!"</p>
+                    <footer class="blockquote-footer mt-2">Samantha, Customer</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"The quality of their products is outstanding. I highly recommend Beauty Store!"</p>
+                    <footer class="blockquote-footer mt-2">Michael, Customer</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote">
+                    <p class="mb-0">"I've been a loyal customer of Beauty Store for years. Their products never disappoint."</p>
+                    <footer class="blockquote-footer mt-2">Emily, Customer</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
