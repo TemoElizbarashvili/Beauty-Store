@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Beauty.Shared.Models;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,18 +24,32 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                        </li>
+                        @if (User.IsInRole(RolesData.ManagerRole))
+                        {
+                            <li class="nav-item dropdown text-white">
+                                <a class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu text-bg-white text-black">
+                                    <a class="nav-link dropdown-item text-light" asp-area="" asp-controller="Admin" asp-action="Index">Products</a>
+                                    <a class="nav-link dropdown-item text-light" asp-area="" asp-controller="" asp-action=""></a>
+                                    <a class="nav-link dropdown-item text-light" asp-area="" asp-controller="" asp-action=""></a>
+
+                                    <div class="dropdown-divider">
+                                    </div>
+                                    <a class="nav-link dropdown-item" id="register" asp-area="Identity" asp-page="/Account/Register">
+                                        Register Manager
+                                    </a>
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <div class="container">
                         <div class="row justify-content-end">
                             <div class="col-md-4 offset-md-1 ">
                                 <form asp-controller="Home" asp-action="SearchResult" class="form-inline justify-content-end">
                                     <div class="input-group">
-                                        <input type="text" name="searchText" class="form-control" placeholder="Search">
+                                        <input type="text" name="searchText" class="form-control me-sm-2" placeholder="Search">
                                         <div class="input-group-append">
-                                            <button class="btn btn-success " type="submit">Search</button>
+                                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                                         </div>
                                     </div>
                                 </form>

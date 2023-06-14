@@ -29,16 +29,14 @@ namespace Beauty.Web.Areas.Identity.Data
                 _roleManager.CreateAsync(new IdentityRole(RolesData.ManagerRole)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(RolesData.CustomerRole)).GetAwaiter().GetResult();
 
-                _userManager.CreateAsync(new ApplicationUser
+                _userManager.CreateAsync(new IdentityUser
                 {
                     UserName = "admin@dokkyoshi.com",
                     Email = "admin@dokkyoshi.com",
-                    EmailConfirmed = true,
-                    FirstName = "Manager",
-                    LastName = "Smith"
-                }, "P@ssword123").GetAwaiter().GetResult();
+                    EmailConfirmed = true
+                }, "Password-23").GetAwaiter().GetResult();
 
-                ApplicationUser user = context.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@dokkyoshi.com");
+                var user = _userManager.FindByEmailAsync("admin@dokkyoshi.com").GetAwaiter().GetResult();
 
                 if (user != null)
                 {
