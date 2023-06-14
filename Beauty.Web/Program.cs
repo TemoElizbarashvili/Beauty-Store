@@ -27,6 +27,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IStoreRepository, StoreRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<ISeedIdentity, SeedIdentity>();
 
 builder.Services.AddRazorPages();
@@ -38,8 +39,7 @@ builder.Services.AddDbContext<StoreDbContext>(opts =>
     opts.UseSqlServer(
         builder.Configuration["ConnectionStrings:StoreConnection"], b => b.MigrationsAssembly("Beauty.Web"));
 });
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<StoreDbContext>();
+
 
 
 var app = builder.Build();

@@ -10,6 +10,6 @@ namespace Beauty.DAL.UnitOfWork
     public interface IUnitOfWork
     {
         public IProductRepository ProductRepository { get; }
-
+        public IFeedbackRepository FeedbackRepository { get; }
     }
 }

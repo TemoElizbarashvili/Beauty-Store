@@ -10,5 +10,6 @@ namespace Beauty.DAL.Repositories.IRepository
     public interface IStoreRepository
     {
         IQueryable<Product> Products { get; }
+        IQueryable<Feedback> Feedbacks { get; }
     }
 }

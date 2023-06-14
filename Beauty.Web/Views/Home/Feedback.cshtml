@@ -1,0 +1,33 @@
+﻿@using Beauty.Shared.Models;
+@model Feedback
+
+<div class="container">
+    <h2>Give Feedback</h2>
+    <form asp-controller="Home" asp-action="Feedback" method="post">
+        <div class="form-floating border-bottom mt-2">
+            <input type="text" asp-for="Title" class="form-control border-1 border-black" id="floatingInput" placeholder="Title" autocomplete="username" aria-required="true" />
+            <label asp-for="Title" for="floatingInput">Title</label>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control border-1 border-black" id="description" name="Description" required></textarea>
+        </div>
+        <div class="form-floating border-bottom mt-2">
+            <input type="text" asp-for="Author" class="form-control border-1 border-black" id="floatingInput" placeholder="Author" autocomplete="Author" aria-required="true" />
+            <label asp-for="Author" for="floatingInput">Author</label>
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        <div class="form-floating border-bottom mt-2">
+            <input type="url" asp-for="ImageUrl" class="form-control border-1 border-black" id="floatingInput" placeholder="Image URL" autocomplete="Image URL" aria-required="true" />
+            <label asp-for="ImageUrl" for="floatingInput">Image URL</label>
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+        <div class="form-floating border-bottom mt-2">
+            <input type="number" asp-for="Rate" class="form-control border-1 border-black" id="floatingInput" placeholder="Rate"
+            autocomplete="Rate" aria-required="true" min="0" max="5" step="0.1">
+            <label asp-for="Rate" for="floatingInput">Rate</label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit Feedback</button>
+    </form>
+</div>

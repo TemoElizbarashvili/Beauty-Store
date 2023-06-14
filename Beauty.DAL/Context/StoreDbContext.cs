@@ -13,6 +13,7 @@ namespace Beauty.DAL.Context
         public StoreDbContext(DbContextOptions<StoreDbContext> options) : base(options) { }
        
         public DbSet<Product> Products => Set<Product>();
+        public DbSet<Feedback> Feedbacks => Set<Feedback>();
 
     }
 }

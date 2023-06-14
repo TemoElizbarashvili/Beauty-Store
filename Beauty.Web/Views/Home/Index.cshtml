@@ -65,12 +65,15 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <blockquote class="blockquote">
-                    <p class="mb-0">"I love the products at Beauty Store. They always make me feel beautiful!"</p>
-                    <footer class="blockquote-footer mt-2">Samantha, Customer</footer>
-                </blockquote>
-            </div>
+            @foreach(var fb in Model.Feedbacks)
+            {
+                <div class="col-md-4">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">@fb.Description</p>
+                        <footer class="blockquote-footer mt-2">@fb.Author</footer>
+                    </blockquote>
+                </div>
+            }
             <div class="col-md-4">
                 <blockquote class="blockquote">
                     <p class="mb-0">"The quality of their products is outstanding. I highly recommend Beauty Store!"</p>
@@ -84,5 +87,8 @@
                 </blockquote>
             </div>
         </div>
+    </div>
+    <div class="container align-content-end">
+        <a asp-controller="Home" asp-action="Feedback" class="btn btn-outline-warning ">Give Us Feedback</a>
     </div>
 </section>
