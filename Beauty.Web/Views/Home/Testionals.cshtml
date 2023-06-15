@@ -1,0 +1,76 @@
+﻿@using Beauty.Shared.Models;
+@model IEnumerable<Feedback>
+
+    <style>
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+            display: inline-block;
+            position: relative;
+        }
+
+        .rating > span {
+            display: inline-block;
+            position: relative;
+            width: 1.1em;
+            font-size: 1.5em;
+            color: #FFD700;
+        }
+
+
+    </style>
+
+@if (!Model.Any())
+{
+    <p>There is no Testionals/Feedbacks:(</p>
+}
+else
+{
+
+    <div class="col-sm-12 mt-2 text-end">
+        <a asp-controller="Home" asp-action="TestionalsOnPost" class="btn btn-outline-success" data-toggle="modal">
+            <span>My Feebacks</span>
+        </a>
+    </div>
+    <div class="row">
+        @foreach (var fb in Model)
+        {
+            <div class="col-md-6 mt-2">
+                <div class="card">
+                    @if(fb.ImageUrl != null)
+                    {
+                        <img class="card-img-top" src="@fb.ImageUrl" alt="Feedback Image">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@fb.Title</h5>
+                        <p class="card-text">@fb.Description</p>
+                        <p class="card-text">Author: @fb.Author</p>
+                        @{
+                            double rate = fb.Rate;
+                            int fullStars = (int)Math.Floor(rate);
+                            bool halfStar = rate - fullStars >= 0.1;
+                            int emptyStars = 5 - (int)Math.Ceiling(rate);
+                        }
+                        <p class="card-text rating">
+                            @for(int i=0; i< emptyStars; i++)
+                            {
+                                <span>&#9734;</span>
+                            }
+                            
+                            @if (halfStar)
+                            {
+                                <span><i class="fa fa-star-half-full" style="font-size:16px"></i></span>
+                            }
+                            @for (int i = 0; i < fullStars; i++)
+                            {
+                                <span>&#9733;</span>
+                            }
+                            :etaR
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+

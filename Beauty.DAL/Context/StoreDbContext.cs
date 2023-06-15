@@ -1,10 +1,5 @@
 ﻿using Beauty.Shared.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.DAL.Context
 {
@@ -14,6 +9,7 @@ namespace Beauty.DAL.Context
        
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Feedback> Feedbacks => Set<Feedback>();
+        public DbSet<ShoppingCart> ShoppingCart => Set<ShoppingCart>();
 
     }
 }

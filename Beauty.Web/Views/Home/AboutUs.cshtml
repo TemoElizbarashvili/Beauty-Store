@@ -1,0 +1,141 @@
+﻿<!-- About Us Section -->
+<section class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 order-md-2">
+            <div class="image-container position-relative">
+                <img src="https://wwd.com/wp-content/uploads/2021/02/Beauty-Store-Of-The-Future-1.jpg" alt="About Us Image" class="img-fluid">
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <h4>Experience Luxury</h4>
+                        <p>Indulge in our premium beauty treatments</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 order-md-1">
+            <div class="text-container">
+                <h2 class="fadeInUp">About Us</h2>
+                <p class="fadeInUp">Welcome to our beauty web page! We are a team of dedicated professionals who are passionate about providing the highest quality beauty services to our clients. With years of experience in the industry, we have established ourselves as a trusted destination for all your beauty needs.</p>
+                <p class="fadeInUp">At our salon, we believe that beauty is more than just appearances. It is about enhancing your inner confidence and embracing your unique self. Our skilled stylists and aestheticians are trained in the latest techniques and trends to help you achieve the look you desire.</p>
+                <p class="fadeInUp">We offer a wide range of services, including hair styling, makeup application, skincare treatments, nail care, and much more. Our salon is equipped with state-of-the-art facilities and uses only the finest products to ensure exceptional results.</p>
+                <p class="fadeInUp">Customer satisfaction is our top priority, and we strive to create a warm and welcoming environment where you can relax and enjoy a pampering experience. Whether you're preparing for a special occasion or simply want to treat yourself, we are here to make you feel beautiful inside and out.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center mb-5">Our Services</h2>
+            </div>
+            <div class="col-md-4">
+                <div class="service-item">
+                    <i class="icon fas fa-cut"></i>
+                    <h4>Hair Styling</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-item">
+                    <i class="icon fa-solid fa-spray-can-sparkles"></i>
+                    <h4>Makeup</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-item">
+                    <i class="icon fas fa-spa"></i>
+                    <h4>Skincare</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location Section -->
+<section class="location">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center mb-5">Our Location</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="address">
+                    <h4>Visit Us</h4>
+                    <p>123 Beauty Street, City, Country</p>
+                    <h4>Contact Us</h4>
+                    <p>Phone: +1 123-456-7890</p>
+                    <p>Email: info@beautywebpage.com</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Staff Section -->
+<section class="staff">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="text-center mb-5">Our Staff</h2>
+            </div>
+            <div class="col-md-4">
+                <div class="staff-member">
+                    <img src="~/img/Bruce_Wayne.webp" alt="Staff Member" class="img-fluid">
+                    <h5>Bruce Wayne</h5>
+                    <p>Hair Stylist</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="staff-member">
+                    <img src="~/img/Arnold.webp" alt="Staff Member" class="img-fluid">
+                    <h5>Arnold Schwarzenegger</h5>
+                    <p>Makeup Artist</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="staff-member">
+                    <img src="~/img/Chad.webp" alt="Staff Member" class="img-fluid">
+                    <h5>Giga Chad</h5>
+                    <p>Esthetician</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBItQZo9FxjKCOL1Do05ZU4eClOSIxGP1c&callback=initMap"></script>
+<!-- Custom JS -->
+<script>
+    function initMap() {
+        // Initialize and display the map
+        var location = { lat: 41.71724245767129, lng: 44.721519010775495 }; // 41.71724245767129, 44.721519010775495
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: location,
+            zoom: 12
+        });
+
+        // Add a marker to the map
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            title: 'Our Location'
+        });
+    }
+
+    // Execute the initMap() function when the Google Maps API is fully loaded
+    google.maps.event.addDomListener(window, 'load', initMap);
+</script>

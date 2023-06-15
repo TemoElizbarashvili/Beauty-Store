@@ -20,7 +20,7 @@ namespace Beauty.DAL.Repositories
         public Task CreateFeedback(Feedback fb)
         {
             _db.Feedbacks.Add(fb);
-            _db.SaveChangesAsync();
+            _db.SaveChanges();
             return Task.CompletedTask;
         }
 

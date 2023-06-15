@@ -53,6 +53,7 @@ namespace Beauty.Web.Controllers
             return View(resultList);
         }
 
+        #region Feedback Creation
         [Authorize]
         [HttpGet]
         public IActionResult Feedback()
@@ -64,7 +65,7 @@ namespace Beauty.Web.Controllers
         public async Task<IActionResult> Feedback(Feedback fb)
         {
             var user = await _userManager.GetUserAsync(User);
-            fb.User = user;
+            fb.UserId = user.Id;
             if (ModelState.IsValid)
             {
                 await _feedbackService.CreateFeedback(fb);
@@ -74,6 +75,28 @@ namespace Beauty.Web.Controllers
                 return View();
             }
             return RedirectToAction("Index");
+        }
+
+        #endregion
+        #region Testionals Page
+        [HttpGet]
+        public IActionResult Testionals()
+        {
+            return View(_feedbackService.List().ToList());
+        }
+        [Authorize]
+        public async Task<IActionResult> TestionalsOnPost()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var list = _feedbackService.List().Where(fb => fb.UserId == user.Id).ToList();
+            return View("Testionals", list);
+        }
+        #endregion
+
+        [HttpGet]
+        public IActionResult AboutUs()
+        {
+            return View();
         }
     }
 }
