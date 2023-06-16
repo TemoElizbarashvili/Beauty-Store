@@ -11,5 +11,6 @@ namespace Beauty.DAL.UnitOfWork
     {
         public IProductRepository ProductRepository { get; }
         public IFeedbackRepository FeedbackRepository { get; }
+        public IShoppingCartRepository ShoppingCartRepository { get; }
     }
 }

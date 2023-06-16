@@ -1,0 +1,64 @@
+﻿@using Beauty.Shared.Models;
+@model ShoppingCart
+
+<div class="">
+    <form asp-controller="Home" asp-action="DetailsOnPost" asp-route-productId="@Model.Product.ProductId" method="post">
+        <input asp-for="Product" value="@Model.Product" hidden="hidden" />
+        <input asp-for="UserId" hidden="hidden" />
+        <div class="container backgroundWhite">
+            <div class="card">
+                <div class="card-header">
+                    <div class="text-light ml-0 row">
+                        <div class="col-12 col-md-6 pt-2">
+                            <h1 class="text-primary">@Model.Product.Name</h1>
+                        </div>
+                        <div class="col-12 col-md-6 text-end pt-2">
+                            <h1 class="text-muted">$@Model.Product.Price</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="container rounded p-2 justify-content-center">
+                        <div class="=row justify-content-center">
+                            <div class="col-12 col-lg-4 p-1 text-center align-items-center justify-content-center">
+                                <img src="@Model.Product.ImgUrl" style="width:100%;" class="rounded" />
+                            </div>
+                            <div class="col-12 col-lg-8">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p>Kakao</p>
+                                        <h3 class="text-success"></h3>
+
+                                        <p class="text-secondary">@Html.Raw(Model.Product.Description)</p>
+
+                                        <div class="form-floating my-2">
+                                            <input asp-for="Count" class="form-control" aria-required="true" />
+                                            <label asp-for="Count">Count</label>
+                                            <span asp-validation-for="Count" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-12 col-md-6 pb-1">
+                            <a class="btn btn-primary btn-square form-control" style="height:50px">Back To LIst</a>
+                        </div>
+                        <div class="col-12 col-md-6 pb-1">
+                            <button type="submit" class="btn btn-success btn-square form-control" style="height:50px;">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

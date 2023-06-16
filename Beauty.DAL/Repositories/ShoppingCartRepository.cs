@@ -18,45 +18,48 @@ namespace Beauty.DAL.Repositories
             _db = db;
         }
 
-        public Task CreateShoppingCart(ShoppingCart prd)
+        public Task CreateShoppingCart(ShoppingCart crt)
         {
-            throw new NotImplementedException();
+            _db.ShoppingCart.Add(crt);
+            _db.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public int DecrementCount(ShoppingCart shoppingCart, int count)
         {
-            //shoppingCart.Count -=count;
+            shoppingCart.Count -= count;
+            _db.SaveChangesAsync();
             return shoppingCart.Count;
         }
 
         public Task DeleteShoppingCart(int crt)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task EditShoppingCart(ShoppingCart crt)
-        {
-            throw new NotImplementedException();
+            var objToDelete = _db.ShoppingCart.Where(c => c.ShoppingCartId == crt).FirstOrDefault();
+            _db.Remove(objToDelete);
+            _db.SaveChangesAsync();
+            return Task.CompletedTask;
         }
 
         public Task<ShoppingCart> GetByIdAsync(int crt)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_db.ShoppingCart.Where(c => c.ShoppingCartId == crt).FirstOrDefault());
         }
 
-        public Task<ShoppingCart> GetByUserIdAsync(int userId)
+        public Task<ShoppingCart> GetByUserIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_db.ShoppingCart.Where(c => c.UserId == userId).FirstOrDefault());
         }
 
         public int IncrementCount(ShoppingCart shoppingCart, int count)
         {
-            throw new NotImplementedException();
+            shoppingCart.Count += count;
+            _db.SaveChangesAsync();
+            return shoppingCart.Count;
         }
 
         public IQueryable<ShoppingCart> List()
         {
-            throw new NotImplementedException();
+            return _db.ShoppingCart;
         }
     }
 }

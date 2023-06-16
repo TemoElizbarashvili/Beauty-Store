@@ -15,18 +15,13 @@ namespace Beauty.Shared.Models
             Count = 1;
         }
         [BindNever]
-        public long CartId { get; set; }
-        public long Productid { get; set; }
+        public long ShoppingCartId { get; set; }
         [ForeignKey("ProductId")]
         [ValidateNever]
         public Product Product { get; set; }
         [Range(1, 100, ErrorMessage = " Please select a count between 1 and 100")]
         public int Count { get; set; }
         public string UserId { get; set; }
-        [ForeignKey("UserId")]
-        [ValidateNever]
-        public IdentityUser User { get; set; }
-
 
     }
 }

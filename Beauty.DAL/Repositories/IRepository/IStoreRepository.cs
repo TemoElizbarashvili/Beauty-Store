@@ -1,9 +1,4 @@
 ﻿using Beauty.Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Beauty.DAL.Repositories.IRepository
 {
@@ -11,5 +6,6 @@ namespace Beauty.DAL.Repositories.IRepository
     {
         IQueryable<Product> Products { get; }
         IQueryable<Feedback> Feedbacks { get; }
+        IQueryable<ShoppingCart> ShoppingCart { get; }
     }
 }

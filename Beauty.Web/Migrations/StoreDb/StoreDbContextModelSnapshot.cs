@@ -49,11 +49,9 @@ namespace Beauty.Web.Migrations.StoreDb
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FeedbackId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -85,65 +83,37 @@ namespace Beauty.Web.Migrations.StoreDb
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("Beauty.Shared.Models.ShoppingCart", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("ShoppingCartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.Property<int>("AccessFailedCount")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ShoppingCartId"), 1L, 1);
+
+                    b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ShoppingCartId");
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                    b.HasIndex("ProductId");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityUser");
+                    b.ToTable("ShoppingCart");
                 });
 
-            modelBuilder.Entity("Beauty.Shared.Models.Feedback", b =>
+            modelBuilder.Entity("Beauty.Shared.Models.ShoppingCart", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                    b.HasOne("Beauty.Shared.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("ProductId");
 
-                    b.Navigation("User");
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,16 +14,19 @@ namespace Beauty.Web.Controllers
        
         private IProductService _produtService;
         private IFeedbackService _feedbackService;
+        private IShoppingCartService _shoppingCartService;
         private readonly UserManager<IdentityUser> _userManager;
         public int PageSize = 3;
 
         public HomeController(IProductService produtService, UserManager<IdentityUser> userManager,
-            IFeedbackService feedbackService)
+            IFeedbackService feedbackService, IShoppingCartService shoppingCartService)
         {
 
             _produtService = produtService;
             _userManager = userManager;
             _feedbackService = feedbackService;
+            _shoppingCartService = 
+            _shoppingCartService = shoppingCartService;
         }
 
         public IActionResult Index(int productPage = 1)
@@ -98,5 +101,43 @@ namespace Beauty.Web.Controllers
         {
             return View();
         }
+
+        [BindProperty]
+        public ShoppingCart ShoppingCart { get; set; }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Details(long productId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            ShoppingCart = new()
+            {
+                UserId = user.Id,
+                Product = _produtService.List().Where(p => p.ProductId == productId).FirstOrDefault()
+            };
+            return View(ShoppingCart);
+        }
+        [HttpPost]
+        public IActionResult DetailsOnPost(long productId)
+        {
+            ShoppingCart.Product = _produtService.List().Where(p => p.ProductId == productId).FirstOrDefault();
+            if (ModelState.IsValid)
+            {
+                ShoppingCart cartFromDb = _shoppingCartService.List().Where(c => c.UserId == ShoppingCart.UserId &&
+                        c.Product.ProductId == ShoppingCart.Product.ProductId).FirstOrDefault();
+                if(cartFromDb == null)
+                {
+                    _shoppingCartService.CreateShoppingCart(ShoppingCart);
+
+                }
+                else
+                {
+                    _shoppingCartService.IncrementCount(cartFromDb, ShoppingCart.Count);
+                }
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
     }
 }
