@@ -28,11 +28,15 @@ namespace Beauty.DAL.Repositories
         public int DecrementCount(ShoppingCart shoppingCart, int count)
         {
             shoppingCart.Count -= count;
+            if(shoppingCart.Count == 0)
+            {
+                _db.ShoppingCart.Remove(shoppingCart);
+            }
             _db.SaveChangesAsync();
             return shoppingCart.Count;
         }
 
-        public Task DeleteShoppingCart(int crt)
+        public Task DeleteShoppingCart(long crt)
         {
             var objToDelete = _db.ShoppingCart.Where(c => c.ShoppingCartId == crt).FirstOrDefault();
             _db.Remove(objToDelete);
@@ -40,7 +44,7 @@ namespace Beauty.DAL.Repositories
             return Task.CompletedTask;
         }
 
-        public Task<ShoppingCart> GetByIdAsync(int crt)
+        public Task<ShoppingCart> GetByIdAsync(long crt)
         {
             return Task.FromResult(_db.ShoppingCart.Where(c => c.ShoppingCartId == crt).FirstOrDefault());
         }

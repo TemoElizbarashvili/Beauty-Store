@@ -15,5 +15,6 @@ namespace Beauty.DAL.Repositories
         public IQueryable<Product> Products => _db.Products;
         public IQueryable<Feedback> Feedbacks => _db.Feedbacks;
         public IQueryable<ShoppingCart> ShoppingCart => _db.ShoppingCart;
+        public IQueryable<Order> Orders => _db.Orders;
     }
 }

@@ -19,10 +19,12 @@ namespace Beauty.DAL.UnitOfWork
             ProductRepository = new ProductRepository(_db);
             FeedbackRepository = new FeedbackRepository(_db);
             ShoppingCartRepository = new ShoppingCartRepository(_db);
+            OrderRepository = new OrderRepository(_db);
         }
 
         public IProductRepository ProductRepository { get; }
         public IFeedbackRepository FeedbackRepository { get; }
         public IShoppingCartRepository ShoppingCartRepository { get; }
+        public IOrderRepository OrderRepository { get; }
     }
 }

@@ -10,6 +10,7 @@ namespace Beauty.DAL.Context
         public DbSet<Product> Products => Set<Product>();
         public DbSet<Feedback> Feedbacks => Set<Feedback>();
         public DbSet<ShoppingCart> ShoppingCart => Set<ShoppingCart>();
+        public DbSet<Order> Orders => Set<Order>();
 
     }
 }

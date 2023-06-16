@@ -103,6 +103,7 @@ namespace Beauty.Web.Controllers
         }
 
         #region Details & add in Shopping Cart
+
         [BindProperty]
         public ShoppingCart ShoppingCart { get; set; }
 

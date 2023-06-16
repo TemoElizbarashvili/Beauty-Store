@@ -56,6 +56,39 @@ namespace Beauty.Web.Migrations.StoreDb
                     b.ToTable("Feedbacks");
                 });
 
+            modelBuilder.Entity("Beauty.Shared.Models.Order", b =>
+                {
+                    b.Property<long>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("OrderId"), 1L, 1);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("OrderTotal")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("Beauty.Shared.Models.Product", b =>
                 {
                     b.Property<long>("ProductId")
@@ -94,6 +127,9 @@ namespace Beauty.Web.Migrations.StoreDb
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
+                    b.Property<long?>("OrderId")
+                        .HasColumnType("bigint");
+
                     b.Property<long?>("ProductId")
                         .HasColumnType("bigint");
 
@@ -102,6 +138,8 @@ namespace Beauty.Web.Migrations.StoreDb
 
                     b.HasKey("ShoppingCartId");
 
+                    b.HasIndex("OrderId");
+
                     b.HasIndex("ProductId");
 
                     b.ToTable("ShoppingCart");
@@ -109,11 +147,20 @@ namespace Beauty.Web.Migrations.StoreDb
 
             modelBuilder.Entity("Beauty.Shared.Models.ShoppingCart", b =>
                 {
+                    b.HasOne("Beauty.Shared.Models.Order", null)
+                        .WithMany("Lines")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("Beauty.Shared.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Beauty.Shared.Models.Order", b =>
+                {
+                    b.Navigation("Lines");
                 });
 #pragma warning restore 612, 618
         }

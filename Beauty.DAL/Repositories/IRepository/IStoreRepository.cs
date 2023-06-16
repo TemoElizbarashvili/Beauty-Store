@@ -7,5 +7,6 @@ namespace Beauty.DAL.Repositories.IRepository
         IQueryable<Product> Products { get; }
         IQueryable<Feedback> Feedbacks { get; }
         IQueryable<ShoppingCart> ShoppingCart { get; }
+        IQueryable<Order> Orders { get; }
     }
 }
