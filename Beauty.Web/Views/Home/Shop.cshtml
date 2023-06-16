@@ -1,0 +1,21 @@
+﻿@using Beauty.Shared.Models;
+@model ShopVIewModel
+
+@if(!Model.Products.Any()){
+    <p>There Is No Product Avialable.</p>
+}
+else
+{
+    <div class="row mt-2">
+    @foreach (var p in Model.Products)
+    {
+        <partial name="ProductCard" model="p" />
+    }
+    </div>
+    @if(!Model.IsAllShown)
+    {
+        <div class="row align-content-center justify-content-center">
+            <a asp-controller="Home" asp-action="ShopShowMore" class="text-muted col-md-1" style="margin:auto;" >See More...</a>
+        </div>
+    }
+}

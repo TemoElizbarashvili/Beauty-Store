@@ -1,6 +1,23 @@
 ﻿@using Beauty.Shared.Models;
 @model Product
 
+<style>
+    .card {
+        height: 100%;
+    }
+
+    .card-img-top {
+        object-fit: cover;
+        height: 400px; /* Adjust this value as needed */
+    }
+
+    .card-text {
+        max-height: 80px; /* Adjust this value as needed */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
 <div class="col-md-4 mb-2">
     <div class="card">
         <img src="@Model.ImgUrl" class="card-img-top" alt="Product 1">

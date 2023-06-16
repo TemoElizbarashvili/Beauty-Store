@@ -102,6 +102,7 @@ namespace Beauty.Web.Controllers
             return View();
         }
 
+        #region Details & add in Shopping Cart
         [BindProperty]
         public ShoppingCart ShoppingCart { get; set; }
 
@@ -138,6 +139,30 @@ namespace Beauty.Web.Controllers
             }
             return View();
         }
+        #endregion
+
+        #region Shop
+        public IActionResult Shop()
+        {
+            var list = _produtService.List().OrderBy(p => p.ProductId).Take(6).ToList();
+            return View(new ShopVIewModel
+            {
+                Products = list,
+                IsAllShown = false
+            });
+        }
+        public IActionResult ShopShowMore()
+        {
+            var list = _produtService.List().OrderBy(p => p.ProductId).ToList();
+            return View("Shop", new ShopVIewModel
+            {
+                Products = list,
+                IsAllShown = true
+            });
+        }
+
+
+        #endregion
 
     }
 }

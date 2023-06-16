@@ -56,11 +56,11 @@ body {
     text-align: center;
 }
 
-    .overlay-content h4,
-    .overlay-content p {
-        color: #fff;
-        margin: 0;
-    }
+.overlay-content h4,
+.overlay-content p {
+    color: #fff;
+    margin: 0;
+}
 /* Styling for services section */
 .services {
     padding: 80px 0;
@@ -71,54 +71,55 @@ body {
     text-align: center;
 }
 
-    .service-item .icon {
-        font-size: 48px;
-        margin-bottom: 20px;
-    }
+.service-item .icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
 
-    .service-item h4 {
-        margin-bottom: 20px;
-    }
+.service-item h4 {
+    margin-bottom: 20px;
+}
 /* Styling for location section */
 .location {
     padding: 80px 0;
     background-color: #fff;
 }
 
-    .location .address {
-        margin-bottom: 40px;
-    }
+.location .address {
+    margin-bottom: 40px;
+}
 
-        .location .address h4 {
-            margin-bottom: 10px;
-        }
+.location .address h4 {
+    margin-bottom: 10px;
+}
 /* Styling for staff section */
 .staff {
     padding: 80px 0;
     background-color: #f9f9f9;
 }
 
-    .staff .staff-member {
-        text-align: center;
-    }
+.staff .staff-member {
+    text-align: center;
+}
 
-        .staff .staff-member img {
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 20px;
-        }
+.staff .staff-member img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
 
-        .staff .staff-member h5 {
-            margin-bottom: 10px;
-        }
+.staff .staff-member h5 {
+    margin-bottom: 10px;
+}
 
-        .staff .staff-member p {
-            color: #888;
-            margin-bottom: 0;
-        }
+.staff .staff-member p {
+    color: #888;
+    margin-bottom: 0;
+}
 
 #map {
     height: 400px;
+    color: #000000;
 }

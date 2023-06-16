@@ -7,10 +7,10 @@
 <section id="banner" class="bg-light py-5">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 align-content-center">
                 <h1>Welcome to Beauty Store</h1>
                 <p>Your one-stop destination for all your beauty needs.</p>
-                <a href="#products" class="btn btn-primary">Shop Now</a>
+                <a asp-controller="Home" asp-action="Shop" class="btn btn-primary">Shop Now</a>
             </div>
             <div class="col-md-6">
                 <img src="https://cdn.storesupply.com/-/media/storesupply/images/contentpages/beauty-supply-store-banner.jpg?h=490&w=1000&hash=A7FC985D57C29E25324C65E9A7D63DDF" class="img-fluid" alt="Beauty Store Banner">
@@ -86,7 +86,11 @@
         </div>
     </div>
     <div class="container row align-content-end">
-        <a asp-controller="Home" asp-action="Feedback" class="btn btn-outline-warning col-md-2">Give Us Feedback</a>
-        <a asp-controller="Home" asp-action="Testionals" class="text-muted col-md-2" style="margin-left:800px;">See More...</a>
+        <div class="row align-content-end justify-content-end">
+            <a asp-controller="Home" asp-action="Testionals" class="text-muted col-md-1" style="margin:auto;">See More...</a>
+        </div>
+        <div class="row align-content-end justify-content-end">
+            <a asp-controller="Home" asp-action="Feedback" class="btn btn-outline-warning col-md-2" style="margin:auto;">Give Us Feedback</a>
+        </div>
     </div>
 </section>
