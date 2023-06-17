@@ -14,7 +14,8 @@ namespace Beauty.DAL.Repositories.IRepository
         public Task<ShoppingCart> GetByUserIdAsync(string userId);
         public Task CreateShoppingCart(ShoppingCart crt);
         public Task DeleteShoppingCart(long crt);
-        public int IncrementCount(ShoppingCart shoppingCart, int count);
-        public int DecrementCount(ShoppingCart shoppingCart, int count);
+        public Task<int> IncrementCount(ShoppingCart shoppingCart, int count);
+        public Task<int> DecrementCount(ShoppingCart shoppingCart, int count);
+        public Task ChangeUser(long id);
     }
 }

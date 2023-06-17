@@ -1,22 +1,41 @@
 ﻿@using Beauty.Shared.Models;
-@model IEnumerable<Order>
+@model OrderViewModel
 
-<h1 class="text-primary py-3">Manage Order's</h1>
+    <div class="d-flex justify-content-end">
+    <h1 class="text-primary"style="margin-right:40%;">Manage Order's</h1>
+        <div class="p-2">
+            <ul class="list-group list-group-horizontal-sm">
+                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="cancelled">
+                    <li class="list-group-item @(Model.Status.Equals("Cancelled") ? "list-group-item-success active" : "")">Cancelled</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="completed">
+                    <li class="list-group-item @(Model.Status.Equals("Completed") ? "list-group-item-success active" : "")">Completed</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="ready">
+                    <li class="list-group-item @(Model.Status.Equals("Ready For Ship") ? "list-group-item-success active" : "")">Ready To Ship</li>
+                </a>
+                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="inProcces">
+                    <li class="list-group-item @(Model.Status.Equals("Being Ready To Ship") ? "list-group-item-success active" : "")">In Proccess</li>
+                </a>
+            </ul>
+        </div>
+    </div>
 <form method="post">
     <div class="container row bg-white p-2 mb-3 rounded">
-        @foreach (var item in Model)
+        @if (!Model.Orders.Any())
         {
-            <div class="col-12 pb-3 pt-3 mt-4 border rounded">
+            <h3>There Is no Orders To Show :(</h3>
+        }
+        @foreach (var item in Model.Orders)
+        {
+            <div class="col-12 pb-3 pt-3 mt-4 border border-1 border-info rounded">
                 <div class="row">
                     <div class="col-4">
                         Order Number: @item.OrderId
-                        <br />
-                        Customer Name: @item.Name
                         <ul class="text-info">
                             @foreach (var details in item.Lines)
                             {
                                 <li>@details.Product.Name x @details.Count</li>
-                                <p>zuzuu</p>
                             }
                         </ul>
                     </div>
@@ -30,28 +49,46 @@
                         <textarea asp-for="@item.Comments" readonly class="rounded border form-control" rows="3"></textarea>
                     </div>
                     <div class="col-3 offset-1 d-flex align-content-center">
-                        <div class="col-12">
+                        <div class="col-12 mt-2">
 
                             @if (item.Status == StatusData.StatusInProcess)
                             {
 
-                                <button type="submit" class="btn btn-primary form-control mb-3"
-                                asp-page-handler="OrderInProcess" asp-route-id="@item.OrderId">
-                                    <i class="bi bi-check-square"></i> &nbsp; Ready To Ship
+                                <button type="submit" class="btn btn-primary form-control mb-2"
+                                asp-controller="Admin" asp-action="ReadyToShip" asp-route-id="@item.OrderId">
+                                    <i class="fa-regular fa-circle-check"></i>&nbsp; Ready To Ship
                                 </button>
                             }
                             @if (item.Status == StatusData.StatusReady)
                             {
-                                <button type="submit" class="btn btn-success form-control mb-3"
-                                asp-page-handler="OrderReady" asp-route-id="@item.OrderId">
-                                    <i class="bi bi-emoji-laughing"></i> &nbsp; Completed
+                                <button type="submit" class="btn btn-success form-control mb-2"
+                                asp-controller="Admin" asp-action="Completed" asp-route-id="@item.OrderId">
+                                    <i class="fa-solid fa-face-smile-beam"></i>&nbsp; Completed
                                 </button>
                             }
-
-                            <button type="submit" class="btn btn-warning form-control mb-3"
-                                asp-page-handler="OrderCancel" asp-route-id="@item.OrderId">
-                                <i class="bi bi-x-square"></i> &nbsp; Cancel Order
-                            </button>
+                            @if (item.Status == StatusData.StatusCancelled)
+                            {
+                                <button type="submit" disabled class="btn btn-danger form-control mb-2"
+                                asp-route-id="@item.OrderId">
+                                    <i class="fa-solid fa-ban"></i> &nbsp; Order Cancelled
+                                </button>
+                            }
+                            else
+                            {
+                                if(item.Status == StatusData.StatusCompleted)
+                                {
+                                    <button type="submit" disabled class="btn btn-success form-control mb-2">
+                                        <i class="fa-solid fa-face-smile-beam"></i> &nbsp; Completed
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-warning form-control mb-2"
+                                        asp-controller="Admin" asp-action="OrderCancel" asp-route-id="@item.OrderId">
+                                        <i class="fa-solid fa-ban"></i> &nbsp; Cancel Order
+                                    </button>
+                                }
+                            }
 
 
                         </div>
@@ -61,3 +98,6 @@
         }
     </div>
 </form>
+@section Scripts{
+    <script src="~/js/orderList.js"></script>
+}

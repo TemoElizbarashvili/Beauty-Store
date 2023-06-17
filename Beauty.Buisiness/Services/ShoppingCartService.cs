@@ -23,7 +23,7 @@ namespace Beauty.Buisiness.Services
             return _uow.ShoppingCartRepository.CreateShoppingCart(crt);
         }
 
-        public int DecrementCount(ShoppingCart shoppingCart, int count)
+        public Task<int> DecrementCount(ShoppingCart shoppingCart, int count)
         {
             return _uow.ShoppingCartRepository.DecrementCount(shoppingCart, count);
         }
@@ -43,7 +43,7 @@ namespace Beauty.Buisiness.Services
             throw new NotImplementedException();
         }
 
-        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        public Task<int> IncrementCount(ShoppingCart shoppingCart, int count)
         {
             return _uow.ShoppingCartRepository.IncrementCount(shoppingCart, count);
         }

@@ -13,5 +13,8 @@ namespace Beauty.DAL.Repositories.IRepository
         public Task<Order> GetByIdAsync(int id);
         public Task CreateOrder(Order order);
         public Task DeleteOrder(int id);
+        public Task<IEnumerable<Order>> GetAllWithShoppingCart();
+        public Task ChangeStatus(long id, string status);
+
     }
 }

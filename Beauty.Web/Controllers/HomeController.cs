@@ -4,6 +4,7 @@ using Beauty.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -29,18 +30,19 @@ namespace Beauty.Web.Controllers
             _shoppingCartService = shoppingCartService;
         }
 
-        public IActionResult Index(int productPage = 1)
+        public async Task<IActionResult> Index(int productPage = 1)
         {
+            var list = await _produtService.List().OrderBy(p => p.ProductId).Skip((productPage - 1) * PageSize).ToListAsync();
             var viewModel = new StoreViewModel
             {
-                Products = _produtService.List().OrderBy(p => p.ProductId).Skip((productPage - 1) * PageSize).Take(PageSize),
+                Products = list.Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
                     TotalItems = _produtService.List().Count()
                 },
-                Feedbacks = _feedbackService.List()
+                Feedbacks = _feedbackService.List().ToList()
             };
             return View(viewModel);
         }
@@ -120,32 +122,34 @@ namespace Beauty.Web.Controllers
             return View(ShoppingCart);
         }
         [HttpPost]
-        public IActionResult DetailsOnPost(long productId)
+        public async Task<IActionResult> DetailsOnPost(long productId)
         {
-            ShoppingCart.Product = _produtService.List().Where(p => p.ProductId == productId).FirstOrDefault();
+            var k = await _produtService.List().Where(p => p.ProductId == productId).ToListAsync();
+            var product = k.FirstOrDefault();
+            ShoppingCart.Product = product;
             if (ModelState.IsValid)
             {
-                ShoppingCart cartFromDb = _shoppingCartService.List().Where(c => c.UserId == ShoppingCart.UserId &&
-                        c.Product.ProductId == ShoppingCart.Product.ProductId).FirstOrDefault();
+                var list = await _shoppingCartService.List().Where(c => c.UserId == ShoppingCart.UserId &&
+                        c.Product.ProductId == ShoppingCart.Product.ProductId).ToListAsync();
+                var cartFromDb = list.FirstOrDefault();
                 if(cartFromDb == null)
                 {
-                    _shoppingCartService.CreateShoppingCart(ShoppingCart);
-
+                    await _shoppingCartService.CreateShoppingCart(ShoppingCart);
                 }
                 else
                 {
-                    _shoppingCartService.IncrementCount(cartFromDb, ShoppingCart.Count);
+                    await _shoppingCartService.IncrementCount(cartFromDb, ShoppingCart.Count);
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("Shop");
             }
             return View();
         }
         #endregion
 
         #region Shop
-        public IActionResult Shop()
+        public async Task<IActionResult> Shop()
         {
-            var list = _produtService.List().OrderBy(p => p.ProductId).Take(6).ToList();
+            var list = await _produtService.List().OrderBy(p => p.ProductId).Take(6).ToListAsync();
             return View(new ShopVIewModel
             {
                 Products = list,

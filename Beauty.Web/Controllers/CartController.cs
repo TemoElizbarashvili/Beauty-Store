@@ -37,35 +37,44 @@ namespace Beauty.Web.Controllers
         #region +, - , Delete
 
         [HttpPost]
-        public IActionResult Plus(long productId)
+        public async Task<IActionResult> Plus(long productId)
         {
             var userId = _userManager.GetUserId(User);
-            ShoppingCart cartFromDb = _uow.ShoppingCartRepository.List().Where(c => c.UserId == userId &&
-                    c.Product.ProductId == productId).FirstOrDefault();
-            _uow.ShoppingCartRepository.IncrementCount(cartFromDb,1);
+            var cartList = await _uow.ShoppingCartRepository.List().Where(c => c.UserId == userId &&
+                    c.Product.ProductId == productId).ToListAsync();
+            var cartFromDb = cartList.FirstOrDefault();
+            await _uow.ShoppingCartRepository.IncrementCount(cartFromDb,1);
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult Minus(long productId)
+        public async Task<IActionResult> Minus(long productId)
         {
             var userId = _userManager.GetUserId(User);
-            ShoppingCart cartFromDb = _uow.ShoppingCartRepository.List().Where(c => c.UserId == userId &&
-                    c.Product.ProductId == productId).FirstOrDefault();
-            _uow.ShoppingCartRepository.DecrementCount(cartFromDb, 1);
+            var cartList = await _uow.ShoppingCartRepository.List().Where(c => c.UserId == userId &&
+                    c.Product.ProductId == productId).ToListAsync();
+            var cartFromDb = cartList.FirstOrDefault();
+            if (cartFromDb != null)
+            {
+                await _uow.ShoppingCartRepository.DecrementCount(cartFromDb, 1);
+            }
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult Remove(long productId)
+        public async Task<IActionResult> Remove(long productId)
         {
             var userId = _userManager.GetUserId(User);
-            ShoppingCart cartFromDb = _uow.ShoppingCartRepository.List().Where(c => c.UserId == userId &&
-                    c.Product.ProductId == productId).FirstOrDefault();
-            _uow.ShoppingCartRepository.DeleteShoppingCart(cartFromDb.ShoppingCartId);
+            var cartList = await _uow.ShoppingCartRepository.List().Where(c => c.UserId == userId &&
+                    c.Product.ProductId == productId).ToListAsync();
+            var cartFromDb = cartList.FirstOrDefault();
+            if (cartFromDb != null)
+            {
+                await _uow.ShoppingCartRepository.DeleteShoppingCart(cartFromDb.ShoppingCartId);
+            }
             return RedirectToAction("Index");
         }
         #endregion
 
-        #region Summary
+        #region Ordering
 
         [HttpGet]
         public async Task<IActionResult> Summary()
@@ -96,26 +105,26 @@ namespace Beauty.Web.Controllers
             {
                 total += (double)(item.Count * item.Product.Price);
             }
-            order.Lines = _uow.ShoppingCartRepository.List().Include(u => u.Product).Where(l => l.UserId == user.Id).ToArray();
+            order.Lines = lines.ToList();
             order.UserId = user.Id;
             order.OrderTotal = total;
             order.Status = StatusData.StatusInProcess;
             await _uow.OrderRepository.CreateOrder(order);
             return RedirectToAction("Confirmation");
         }
-        #endregion
 
         public async Task<IActionResult> Confirmation()
         {
             var user = await _userManager.GetUserAsync(User);
-            var query = _uow.ShoppingCartRepository.List().Where(c => c.UserId == user.Id).AsNoTracking();
+            var query = _uow.ShoppingCartRepository.List().Where(c => c.UserId == user.Id);
             var list = query.ToList();
-            foreach(var item in list)
+            foreach (var item in list)
             {
-                await _uow.ShoppingCartRepository.DeleteShoppingCart(item.ShoppingCartId);
+                await _uow.ShoppingCartRepository.ChangeUser(item.ShoppingCartId);
             }
             var order = _uow.OrderRepository.List().Where(o => o.UserId  == user.Id).FirstOrDefault();
             return View(order);
         }
+        #endregion
     }
 }

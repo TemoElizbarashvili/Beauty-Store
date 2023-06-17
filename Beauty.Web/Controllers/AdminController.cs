@@ -69,11 +69,73 @@ namespace Beauty.Web.Controllers
 
         #region Orders
         [HttpGet]
-        public async Task<IActionResult> Orders()
+        public async Task<IActionResult> Orders(string status = null)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var list = _unitOfWork.OrderRepository.List().Include(c => c.Lines).ThenInclude(l => l.Product).ToList();
-            return View(list);
+            if (status != null)
+            {
+                var list = _unitOfWork.OrderRepository.List().Where(o => o.Status.Equals(status)).Include(o => o.Lines).ThenInclude(c => c.Product);
+                var res = await list.ToListAsync();
+                return View(new OrderViewModel
+                {
+                    Orders = list,
+                    Status = status
+                });
+            }
+            else
+            {
+                var list = _unitOfWork.OrderRepository.List().Include(o => o.Lines).ThenInclude(c => c.Product);
+                var res = await list.ToListAsync();
+                return View(new OrderViewModel
+                {
+                    Orders = res,
+                    Status = "All"
+                });
+            }
+        }
+
+        public IActionResult Filter(string status)
+        {
+            if (status.Equals("cancelled"))
+            {
+                return RedirectToAction("Orders", new { status = StatusData.StatusCancelled });
+            }
+            else
+            {
+                if (status.Equals("completed"))
+                {
+
+                    return RedirectToAction("Orders", new { status = StatusData.StatusCompleted });
+                }
+                else
+                {
+                    if (status.Equals("ready"))
+                    {
+                        return RedirectToAction("Orders", new { status = StatusData.StatusReady });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Orders", new { status = StatusData.StatusInProcess });
+                    }
+                }
+            }
+        }
+
+        public async Task<IActionResult> ReadyToShip(long id)
+        {
+            await _unitOfWork.OrderRepository.ChangeStatus(id, StatusData.StatusReady);
+            return RedirectToAction("Orders");
+        }
+
+        public async Task<IActionResult> Completed(long id)
+        {
+            await _unitOfWork.OrderRepository.ChangeStatus(id, StatusData.StatusCompleted);
+            return RedirectToAction("Orders");
+        }
+
+        public async Task<IActionResult> OrderCancel(long id)
+        {
+            await _unitOfWork.OrderRepository.ChangeStatus(id, StatusData.StatusCancelled);
+            return RedirectToAction("Orders");
         }
 
         #endregion

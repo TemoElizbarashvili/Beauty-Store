@@ -19,6 +19,14 @@ namespace Beauty.DAL.Repositories
             _db = db;
         }
 
+        public async Task ChangeUser(long id)
+        {
+            var listFromDb = await _db.ShoppingCart.Where(o => o.ShoppingCartId == id).ToListAsync();
+            var objFromDb = listFromDb.FirstOrDefault();
+            objFromDb.UserId = "Ordered";
+            _db.SaveChanges();
+        }
+
         public Task CreateShoppingCart(ShoppingCart crt)
         {
             _db.ShoppingCart.Add(crt);
@@ -26,26 +34,23 @@ namespace Beauty.DAL.Repositories
             return Task.CompletedTask;
         }
 
-        public int DecrementCount(ShoppingCart shoppingCart, int count)
+        public async Task<int> DecrementCount(ShoppingCart shoppingCart, int count)
         {
             shoppingCart.Count -= count;
             if(shoppingCart.Count == 0)
             {
                 _db.ShoppingCart.Remove(shoppingCart);
             }
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return shoppingCart.Count;
         }
-
-        public Task DeleteShoppingCart(long crt)
+        public async Task DeleteShoppingCart(long crt)
         {
-            var query = _db.ShoppingCart.Where(c => c.ShoppingCartId == crt).AsNoTracking();
-            var list = query.ToList();
+            var query = _db.ShoppingCart.Where(c => c.ShoppingCartId == crt);
+            var list = await query.ToListAsync();
             var obj = list.FirstOrDefault();
-            _db.Attach(obj);
             _db.Remove(obj);
-            _db.SaveChangesAsync();
-            return Task.CompletedTask;
+            await _db.SaveChangesAsync();
         }
 
         public Task<ShoppingCart> GetByIdAsync(long crt)
@@ -58,10 +63,10 @@ namespace Beauty.DAL.Repositories
             return Task.FromResult(_db.ShoppingCart.Where(c => c.UserId == userId).FirstOrDefault());
         }
 
-        public int IncrementCount(ShoppingCart shoppingCart, int count)
+        public async Task<int> IncrementCount(ShoppingCart shoppingCart, int count)
         {
             shoppingCart.Count += count;
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return shoppingCart.Count;
         }
 

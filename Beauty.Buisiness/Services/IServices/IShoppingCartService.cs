@@ -10,7 +10,7 @@ namespace Beauty.Buisiness.Services.IServices
         public Task<ShoppingCart> GetByUserIdAsync(string userId);
         public Task CreateShoppingCart(ShoppingCart crt);
         public Task DeleteShoppingCart(int crt);
-        public int IncrementCount(ShoppingCart shoppingCart, int count);
-        public int DecrementCount(ShoppingCart shoppingCart, int count);
+        public Task<int> IncrementCount(ShoppingCart shoppingCart, int count);
+        public Task<int> DecrementCount(ShoppingCart shoppingCart, int count);
     }
 }
