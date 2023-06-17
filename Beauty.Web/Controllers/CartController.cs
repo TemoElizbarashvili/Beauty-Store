@@ -90,18 +90,17 @@ namespace Beauty.Web.Controllers
         public async Task<IActionResult> Summary(Order order)
         {
             var user = await _userManager.GetUserAsync(User);
-            var lines = _uow.ShoppingCartRepository.List().Include(u => u.Product).Where(l => l.UserId == user.Id).ToList();
+            var lines = _uow.ShoppingCartRepository.List().Include(u => u.Product).Where(l => l.UserId == user.Id);
             double total = 0;
             foreach (var item in lines)
             {
                 total += (double)(item.Count * item.Product.Price);
             }
-            order.Lines = lines;
+            order.Lines = _uow.ShoppingCartRepository.List().Include(u => u.Product).Where(l => l.UserId == user.Id).ToArray();
             order.UserId = user.Id;
             order.OrderTotal = total;
             order.Status = StatusData.StatusInProcess;
             await _uow.OrderRepository.CreateOrder(order);
-
             return RedirectToAction("Confirmation");
         }
         #endregion
@@ -109,8 +108,9 @@ namespace Beauty.Web.Controllers
         public async Task<IActionResult> Confirmation()
         {
             var user = await _userManager.GetUserAsync(User);
-            var linesToRemove = _uow.ShoppingCartRepository.List().Where(l => l.UserId == user.Id).ToList();
-            foreach(var item in linesToRemove)
+            var query = _uow.ShoppingCartRepository.List().Where(c => c.UserId == user.Id).AsNoTracking();
+            var list = query.ToList();
+            foreach(var item in list)
             {
                 await _uow.ShoppingCartRepository.DeleteShoppingCart(item.ShoppingCartId);
             }

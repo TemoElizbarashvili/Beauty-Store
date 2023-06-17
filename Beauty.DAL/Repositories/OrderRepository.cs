@@ -21,7 +21,7 @@ namespace Beauty.DAL.Repositories
         public async Task CreateOrder(Order order)
         {
             await _db.AddAsync(order);
-            await _db.SaveChangesAsync();
+            _db.SaveChanges();
         }
 
         public Task DeleteOrder(int id)

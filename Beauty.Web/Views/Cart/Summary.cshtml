@@ -32,7 +32,7 @@
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                                 <div class="form-floating border-bottom mt-2">
-                                    <input type="date" asp-for="PickUpDate" class="form-control border-1 border-black" id="floatingInput" placeholder="Title" autocomplete="username" aria-required="true" />
+                                    <input type="datetime" asp-for="PickUpDate" class="form-control border-1 border-black" id="floatingInput" placeholder="Title" autocomplete="username" aria-required="true" />
                                     <label asp-for="PickUpDate" for="floatingInput"></label>
                                     <span asp-validation-for="PickUpDate" class="text-danger"></span>
                                 </div>
@@ -46,8 +46,8 @@
                                         <p>Additional Instructions: </p>
                                     </div>
                                     <div class="mb-4">
-                                        <label for="Comments" class="form-label">Comment:</label>
-                                        <textarea class="form-control border-1 border-black" id="description" name="Description"></textarea>
+                                        <label asp-for="Comments" class="form-label">Comment:</label>
+                                        <textarea asp-for="Comments" class="form-control border-1 border-black" id="description"></textarea>
                                     </div>
                                 </div>
                             </div>

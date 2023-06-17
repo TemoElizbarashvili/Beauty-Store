@@ -18,7 +18,6 @@ namespace Beauty.Shared.Models
         [Required(ErrorMessage = "Please Enter your name")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please Enter Pick Up Date")]
-        [NotMapped]
         [Display(Name="Pick Up Date")]
         public DateTime PickUpDate { get; set; }
         public string Comments { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Beauty.DAL.Context;
 using Beauty.DAL.Repositories.IRepository;
 using Beauty.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,11 @@ namespace Beauty.DAL.Repositories
 
         public Task DeleteShoppingCart(long crt)
         {
-            var objToDelete = _db.ShoppingCart.Where(c => c.ShoppingCartId == crt).FirstOrDefault();
-            _db.Remove(objToDelete);
+            var query = _db.ShoppingCart.Where(c => c.ShoppingCartId == crt).AsNoTracking();
+            var list = query.ToList();
+            var obj = list.FirstOrDefault();
+            _db.Attach(obj);
+            _db.Remove(obj);
             _db.SaveChangesAsync();
             return Task.CompletedTask;
         }
