@@ -1,8 +1,8 @@
-  Beauty Store Web Application
+                    Beauty Store Web Application
 
 Welcome to the Beauty Store web application repository! This application is built using ASP.Net Core MVC and provides a complete solution for managing a beauty store. It includes features such as shopping carts, orders, feedbacks, products, CRUD pages, and user roles (admin and customer).
 
-  Installation
+                              Installation
 
 To get started with the Beauty Store web application, follow the steps below:
 1.	Clone this repository to your local machine using git clone https://github.com/your-username/beauty-store.git.
@@ -11,7 +11,7 @@ To get started with the Beauty Store web application, follow the steps below:
 4.	Set up the database connection string in the appsettings.json file.
 5.	Apply the database migrations by running dotnet ef database update in the project's root directory.
 
-  Usage
+                    Usage
 
 Once the installation process is complete, you can run the Beauty Store web application by executing the dotnet run command in the project's root directory.
 Access the application through your web browser by navigating to https://localhost:7084/.
