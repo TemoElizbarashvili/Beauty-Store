@@ -7,6 +7,21 @@ html {
         font-size: 16px;
     }
 }
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+    .navbar-brand img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        margin-right: 0;
+    }
+}
 
 html {
     position: relative;
@@ -122,4 +137,29 @@ body {
 #map {
     height: 400px;
     color: #000000;
+}
+
+.card {
+    height: 100%;
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 400px; /* Adjust this value as needed */
+}
+
+.card-text {
+    max-height: 80px; /* Adjust this value as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.mt-auto {
+    margin-top: auto;
 }

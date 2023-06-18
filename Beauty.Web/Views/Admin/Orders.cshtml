@@ -1,25 +1,25 @@
 ﻿@using Beauty.Shared.Models;
 @model OrderViewModel
 
-    <div class="d-flex justify-content-end">
-    <h1 class="text-primary"style="margin-right:40%;">Manage Order's</h1>
-        <div class="p-2">
-            <ul class="list-group list-group-horizontal-sm">
-                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="cancelled">
-                    <li class="list-group-item @(Model.Status.Equals("Cancelled") ? "list-group-item-success active" : "")">Cancelled</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="completed">
-                    <li class="list-group-item @(Model.Status.Equals("Completed") ? "list-group-item-success active" : "")">Completed</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="ready">
-                    <li class="list-group-item @(Model.Status.Equals("Ready For Ship") ? "list-group-item-success active" : "")">Ready To Ship</li>
-                </a>
-                <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="inProcces">
-                    <li class="list-group-item @(Model.Status.Equals("Being Ready To Ship") ? "list-group-item-success active" : "")">In Proccess</li>
-                </a>
-            </ul>
-        </div>
+<div class="d-flex justify-content-end">
+<h1 class="text-primary"style="margin-right:40%;">Manage Order's</h1>
+    <div class="p-2">
+        <ul class="list-group list-group-horizontal-sm">
+            <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="cancelled">
+                <li class="list-group-item @(Model.Status.Equals("Cancelled") ? "list-group-item-success active" : "")">Cancelled</li>
+            </a>
+            <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="completed">
+                <li class="list-group-item @(Model.Status.Equals("Completed") ? "list-group-item-success active" : "")">Completed</li>
+            </a>
+            <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="ready">
+                <li class="list-group-item @(Model.Status.Equals("Ready For Ship") ? "list-group-item-success active" : "")">Ready To Ship</li>
+            </a>
+            <a style="text-decoration:none;" asp-controller="Admin" asp-action="Filter" asp-route-status="inProcces">
+                <li class="list-group-item @(Model.Status.Equals("Being Ready To Ship") ? "list-group-item-success active" : "")">In Proccess</li>
+            </a>
+        </ul>
     </div>
+</div>
 <form method="post">
     <div class="container row bg-white p-2 mb-3 rounded">
         @if (!Model.Orders.Any())
