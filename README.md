@@ -1,4 +1,4 @@
-                    Beauty Store Web Application
+                              Beauty Store Web Application
 
 Welcome to the Beauty Store web application repository! This application is built using ASP.Net Core MVC and provides a complete solution for managing a beauty store. It includes features such as shopping carts, orders, feedbacks, products, CRUD pages, and user roles (admin and customer).
 
@@ -11,32 +11,32 @@ To get started with the Beauty Store web application, follow the steps below:
 4.	Set up the database connection string in the appsettings.json file.
 5.	Apply the database migrations by running dotnet ef database update in the project's root directory.
 
-                    Usage
+                              Usage
 
 Once the installation process is complete, you can run the Beauty Store web application by executing the dotnet run command in the project's root directory.
 Access the application through your web browser by navigating to https://localhost:7084/.
 
-  Default Admin User
+                              Default Admin User
 
 To access the admin functionalities of the application, use the following default admin user credentials:
 •	Username: admin@dokkyoshi.com
 •	Password: Password-23 
 
-  YouTube Demo
+                              YouTube Demo
 
 To see a demonstration of the Beauty Store web application in action, you can watch the following YouTube video:
 https://www.youtube.com/watch?v=CTpvRQN40zg
 
-  Contributing
+                              Contributing
 
 We welcome contributions to the Beauty Store web application! If you find any issues or have suggestions for improvements, please open a new issue in the GitHub repository.
 If you'd like to contribute code changes, please fork the repository and submit a pull request with your proposed changes. We appreciate your contributions!
 
-  License
+                              License
 
 The Beauty Store web application is licensed under the MIT License. Feel free to use, modify, and distribute the code as per the terms of the license.
 
-  Acknowledgements
+                              Acknowledgements
 
 We would like to acknowledge the following resources and libraries that were used in the development of this web application:
 •	ASP.Net Core MVC: https://dotnet.microsoft.com/apps/aspnet
